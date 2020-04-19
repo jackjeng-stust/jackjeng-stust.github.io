@@ -3,37 +3,44 @@
 
 <script>
 
-navigator.permissions.query({ name: 'magnetometer' })
-.then(result => {
-  if (result.state === 'denied') {
-    console.log('Permission to use magnetometer sensor is denied.');
-    return;
-  }
-  
-  let status = document.getElementById('status');
-    let heading = document.getElementById('heading');
-    if ( 'Magnetometer' in window ) {
-      let sensor = new Magnetometer();
-      sensor.addEventListener('reading', function(e) {
-        status.innerHTML = 'x: ' + e.target.x + '<br> y: ' + e.target.y + '<br> z: ' + e.target.z;
-        let headingDegrees = 'Heading: ' + Math.atan2(e.target.y, e.target.x) * (180 / Math.PI);
-        heading.innerHTML = headingDegrees;
-      });
-      sensor.start();
+	if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+      DeviceOrientationEvent.requestPermission()
+        .then(permissionState => {
+          if (permissionState === 'granted') {
+            window.addEventListener('deviceorientation', () => {
+			
+			var a = document.getElementById('alpha'),
+      		b = document.getElementById('beta'),
+      		g = document.getElementById('gamma'),
+      		alpha = event.alpha,
+      		beta = event.beta,
+		  	gamma = event.gamma;
+      
+			  a.innerHTML = Math.round(alpha);
+			  b.innerHTML = Math.round(beta);
+			  g.innerHTML = Math.round(gamma);
+			
+			
+			});
+          }
+        })
+        .catch(console.error);
+		document.querySelector('body').innerHTML = '你的瀏覽器不支援喔';
+    } else {
+      // handle regular non iOS 13+ devices
+	  document.querySelector('body').innerHTML = '你的瀏覽器不支援喔2';
     }
-    else status.innerHTML = 'Magnetometer not supported';
 	
-});
 
-    
-
+  
 </script>
 
 <body>
 
-<div id="status">No data</div>
-<div id="heading">No data</div>
-
+alpha:<span id="alpha"></span><br/>
+beta:<span id="beta"></span><br/>
+gamma:<span id="gamma"></span><br/>
+	
 </body>
 
 </html>
