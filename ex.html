@@ -3,6 +3,7 @@
 
 <script>
 
+var counter = 0, counter2 = 0;
 	if (typeof DeviceOrientationEvent.requestPermission === 'function') {
       DeviceOrientationEvent.requestPermission()
         .then(permissionState => {
@@ -12,6 +13,7 @@
 			var a = document.getElementById('alpha'),
       		b = document.getElementById('beta'),
       		g = document.getElementById('gamma'),
+			c = document.getElementById('counter'),
       		alpha = event.alpha,
       		beta = event.beta,
 		  	gamma = event.gamma;
@@ -19,6 +21,14 @@
 			  a.innerHTML = Math.round(alpha);
 			  b.innerHTML = Math.round(beta);
 			  g.innerHTML = Math.round(gamma);
+			  
+			  counter += 1;
+			  c.innerHTML = counter+"次!<br/>Counter2:" + counter2 + "次";
+			  
+			  while(counter > 1000){
+				counter = 0;
+				counter2 += 1;
+			  }
 			
 			
 			});
@@ -40,6 +50,8 @@
 alpha:<span id="alpha"></span><br/>
 beta:<span id="beta"></span><br/>
 gamma:<span id="gamma"></span><br/>
+<br/><br/><br/><br/><br/>
+Counter: <span id="counter"></span>
 	
 </body>
 
