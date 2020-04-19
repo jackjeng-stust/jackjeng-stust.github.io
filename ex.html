@@ -3,24 +3,14 @@
 
 <script>
 
-if (typeof(DeviceMotionEvent) !== 'undefined' && typeof(DeviceMotionEvent.requestPermission) === 'function') {
-          
-          DeviceMotionEvent.requestPermission()
-          .then(response => {
-	alert('Orientation tracking '+ response);
-          
-            if (response == 'granted') {
-              window.addEventListener('devicemotion', (e) => {
-               alert('DeviceMotionEvent:' + e);
-              })
-            }
-          })
-      .catch(console.error)
-      }else {
-          alert('DeviceMotionEvent is not defined');
-      }
-
-    let status = document.getElementById('status');
+navigator.permissions.query({ name: 'accelerometer' })
+.then(result => {
+  if (result.state === 'denied') {
+    console.log('Permission to use accelerometer sensor is denied.');
+    return;
+  }
+  
+  let status = document.getElementById('status');
     let heading = document.getElementById('heading');
     if ( 'Magnetometer' in window ) {
       let sensor = new Magnetometer();
@@ -32,12 +22,17 @@ if (typeof(DeviceMotionEvent) !== 'undefined' && typeof(DeviceMotionEvent.reques
       sensor.start();
     }
     else status.innerHTML = 'Magnetometer not supported';
+	
+});
+
+    
 
 </script>
 
 <body>
 
-<div id="status"></div>
+<div id="status">No data</div>
+<div id="heading">No data</div>
 
 </body>
 
