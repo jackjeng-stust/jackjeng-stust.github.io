@@ -3,10 +3,10 @@
 
 <script>
 
-navigator.permissions.query({ name: 'accelerometer' })
+navigator.permissions.query({ name: 'magnetometer' })
 .then(result => {
   if (result.state === 'denied') {
-    console.log('Permission to use accelerometer sensor is denied.');
+    console.log('Permission to use magnetometer sensor is denied.');
     return;
   }
   
