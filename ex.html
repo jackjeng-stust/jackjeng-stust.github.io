@@ -1,0 +1,38 @@
+<html>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+
+$(document).ready(function(){
+	
+	navigator.permissions.query({ name: 'magnetometer' }).then(result => {
+	if (result.state === 'denied') {
+	$('#log').text("Permission to use magnetometer sensor is denied.");
+    return;
+	
+		let magSensor = new Magnetometer({frequency: 60});
+		magSensor.addEventListener('reading', e => {
+		$('#log').text("Magnetic field along the X-axis " + magSensor.x);
+		$('#log').text("Magnetic field along the Y-axis " + magSensor.y);
+		$('#log').text("Magnetic field along the Z-axis " + magSensor.z);
+		})
+		magSensor.addEventListener('error', event => {
+		console.log(event.error.name, event.error.message);
+		})
+		magSensor.start();
+	}
+  });
+});
+
+
+
+</script>
+
+<body>
+
+<div id="log"></div>
+
+</body>
+
+</html>
