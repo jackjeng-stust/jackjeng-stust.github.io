@@ -1,37 +1,43 @@
 <html>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
 
-$(document).ready(function(){
-	
-	navigator.permissions.query({ name: 'magnetometer' }).then(result => {
-	if (result.state === 'denied') {
-	$('#log').text("Permission to use magnetometer sensor is denied.");
-    return;
-	
-		let magSensor = new Magnetometer({frequency: 60});
-		magSensor.addEventListener('reading', e => {
-		$('#log').text("Magnetic field along the X-axis " + magSensor.x);
-		$('#log').text("Magnetic field along the Y-axis " + magSensor.y);
-		$('#log').text("Magnetic field along the Z-axis " + magSensor.z);
-		})
-		magSensor.addEventListener('error', event => {
-		console.log(event.error.name, event.error.message);
-		})
-		magSensor.start();
-	}
-  });
-});
+if (typeof(DeviceMotionEvent) !== 'undefined' && typeof(DeviceMotionEvent.requestPermission) === 'function') {
+          
+          DeviceMotionEvent.requestPermission()
+          .then(response => {
+	alert('Orientation tracking '+ response);
+          
+            if (response == 'granted') {
+              window.addEventListener('devicemotion', (e) => {
+               alert('DeviceMotionEvent:' + e);
+              })
+            }
+          })
+      .catch(console.error)
+      }else {
+          alert('DeviceMotionEvent is not defined');
+      }
 
-
+    let status = document.getElementById('status');
+    let heading = document.getElementById('heading');
+    if ( 'Magnetometer' in window ) {
+      let sensor = new Magnetometer();
+      sensor.addEventListener('reading', function(e) {
+        status.innerHTML = 'x: ' + e.target.x + '<br> y: ' + e.target.y + '<br> z: ' + e.target.z;
+        let headingDegrees = 'Heading: ' + Math.atan2(e.target.y, e.target.x) * (180 / Math.PI);
+        heading.innerHTML = headingDegrees;
+      });
+      sensor.start();
+    }
+    else status.innerHTML = 'Magnetometer not supported';
 
 </script>
 
 <body>
 
-<div id="log"></div>
+<div id="status"></div>
 
 </body>
 
