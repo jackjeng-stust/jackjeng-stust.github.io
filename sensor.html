@@ -3,11 +3,11 @@
 <script>
 
 var counter = 0, counter2 = 0;
-if (typeof DeviceMotionEvent.requestPermission === 'function') {
-      DeviceMotionEvent.requestPermission()
+	if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+      DeviceOrientationEvent.requestPermission()
         .then(permissionState => {
           if (permissionState === 'granted') {
-            window.addEventListener('devicemotion', () => {
+            window.addEventListener('deviceorientation', () => {});
 				var a = document.getElementById('alpha'),
 				b = document.getElementById('beta'),
 				g = document.getElementById('gamma'),
@@ -27,12 +27,11 @@ if (typeof DeviceMotionEvent.requestPermission === 'function') {
 					counter = 0;
 					counter2 += 1;
 				  }
-			});
           }
         })
         .catch(console.error);
     } else {
-      
+      // handle regular non iOS 13+ devices
     }
 	
 	function init() {
@@ -52,7 +51,7 @@ if (typeof DeviceMotionEvent.requestPermission === 'function') {
   
 </script>
 
-<body onload="init()">
+<body>
 
 alpha:<span id="alpha"></span><br/>
 beta:<span id="beta"></span><br/>
