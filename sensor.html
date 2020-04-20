@@ -1,7 +1,5 @@
 <html>
 
-<script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
-<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 <script>
 
 var counter = 0, counter2 = 0;
@@ -42,7 +40,20 @@ var counter = 0, counter2 = 0;
 	  //document.querySelector('body').innerHTML = '你的瀏覽器不支援喔2';
     }
 	
-
+function checkDeviceMotionEvent() {
+    // feature detect
+    if (typeof DeviceMotionEvent.requestPermission === 'function') {
+      DeviceMotionEvent.requestPermission()
+        .then(permissionState => {
+          if (permissionState === 'granted') {
+            window.addEventListener('devicemotion', () => {});
+          }
+        })
+        .catch(console.error);
+    } else {
+      // handle regular non iOS 13+ devices
+    }
+  }
   
 </script>
 
@@ -54,6 +65,8 @@ gamma:<span id="gamma"></span><br/>
 <br/><br/><br/><br/><br/>
 Counter: <span id="counter"></span>
 	
+	<br/><br/><br/><br/>
+	<input type="button" value="權限" onclick="checkDeviceMotionEvent()"/>
 </body>
 
 </html>
