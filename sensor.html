@@ -3,57 +3,37 @@
 <script>
 
 var counter = 0, counter2 = 0;
-	if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-      DeviceOrientationEvent.requestPermission()
+if (typeof DeviceMotionEvent.requestPermission === 'function') {
+      DeviceMotionEvent.requestPermission()
         .then(permissionState => {
           if (permissionState === 'granted') {
-            window.addEventListener('deviceorientation', () => {
-			
-			var a = document.getElementById('alpha'),
-      		b = document.getElementById('beta'),
-      		g = document.getElementById('gamma'),
-			c = document.getElementById('counter'),
-      		alpha = event.alpha,
-      		beta = event.beta,
-		  	gamma = event.gamma;
-      
-			  a.innerHTML = Math.round(alpha);
-			  b.innerHTML = Math.round(beta);
-			  g.innerHTML = Math.round(gamma);
-			  
-			  counter += 1;
-			  c.innerHTML = "上傳次數:" + counter2 + "次";
-			  
-			  while(counter > 1000){
-				counter = 0;
-				counter2 += 1;
-			  }
-			
-			
+            window.addEventListener('devicemotion', () => {
+				var a = document.getElementById('alpha'),
+				b = document.getElementById('beta'),
+				g = document.getElementById('gamma'),
+				c = document.getElementById('counter'),
+				alpha = event.alpha,
+				beta = event.beta,
+				gamma = event.gamma;
+		  
+				  a.innerHTML = Math.round(alpha);
+				  b.innerHTML = Math.round(beta);
+				  g.innerHTML = Math.round(gamma);
+				  
+				  counter += 1;
+				  c.innerHTML = "上傳次數:" + counter2 + "次";
+				  
+				  while(counter > 1000){
+					counter = 0;
+					counter2 += 1;
+				  }
 			});
           }
         })
         .catch(console.error);
-		//document.querySelector('body').innerHTML = '你的瀏覽器不支援喔';
     } else {
-      // handle regular non iOS 13+ devices
-	  //document.querySelector('body').innerHTML = '你的瀏覽器不支援喔2';
+      
     }
-	
-function checkDeviceMotionEvent() {
-    // feature detect
-    if (typeof DeviceMotionEvent.requestPermission === 'function') {
-      DeviceMotionEvent.requestPermission()
-        .then(permissionState => {
-          if (permissionState === 'granted') {
-            window.addEventListener('devicemotion', () => {});
-          }
-        })
-        .catch(console.error);
-    } else {
-      // handle regular non iOS 13+ devices
-    }
-  }
   
 </script>
 
@@ -65,8 +45,7 @@ gamma:<span id="gamma"></span><br/>
 <br/><br/><br/><br/><br/>
 Counter: <span id="counter"></span>
 	
-	<br/><br/><br/><br/>
-	<input type="button" value="權限" onclick="checkDeviceMotionEvent()"/>
+
 </body>
 
 </html>
