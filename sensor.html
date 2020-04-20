@@ -34,10 +34,25 @@ if (typeof DeviceMotionEvent.requestPermission === 'function') {
     } else {
       
     }
+	
+	function init() {
+    // feature detect
+    if (typeof DeviceMotionEvent.requestPermission === 'function') {
+      DeviceMotionEvent.requestPermission()
+        .then(permissionState => {
+          if (permissionState === 'granted') {
+            window.addEventListener('devicemotion', () => {});
+          }
+        })
+        .catch(console.error);
+    } else {
+      // handle regular non iOS 13+ devices
+    }
+  }
   
 </script>
 
-<body>
+<body onload="init()">
 
 alpha:<span id="alpha"></span><br/>
 beta:<span id="beta"></span><br/>
