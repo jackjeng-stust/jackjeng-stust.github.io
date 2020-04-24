@@ -19,7 +19,7 @@ function saveData(){
 	var now = date.getFullYear() + "/" + (date.getMonth()+1) +"/"+ date.getDate() + "  "+ date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
 
     msg = {
-        data: now + "," + $var_alpha.val()+','+ $var_beta.val()+','+ $var_gamma.val(),
+        data: now + "," + $var_alpha.html()+','+ $var_beta.html()+','+ $var_gamma.html(),
         sheetUrl: 'https://docs.google.com/spreadsheets/d/17eQCh_943_LJ3JpEt_ePl2PqamAZsgQMmxqc0BAfxmw/edit#gid=0',
         sheetTag: '工作表1'
     };
@@ -27,7 +27,7 @@ function saveData(){
 	$var_show.innerHTML = msg;
 	$.post('https://script.google.com/macros/s/AKfycbwKaZ0ZWErJf2BkVBfcrU3OifvyI6eMXYrjyk7HGxtoch1EYMH8/exec', msg,function(e){
 		alert(e.toString());
-		$var_show.append(e.toString());
+		$var_show.text(e.toString());
 	});
 }
 
