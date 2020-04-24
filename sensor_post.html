@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script>
+
+function saveData(){
+	var 
+    $var_alpha = $('#alpha'),
+	$var_beta = $('#beta'),
+	$var_gamma = $('#gamma'),
+    $var_btn = $('#btn'),
+    msg = {};
+	
+	var date = new Date();
+	var now = date.getFullYear() + "/" + (date.getMonth()+1) +"/"+ date.getDate() + "  "+ date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+
+  $var_btn.on('click', function() {
+    msg = {
+        data: now + "," + $var_alpha.val()+','+ $var_beta.val()+','+ $var_gamma.val(),
+        sheetUrl: 'https://docs.google.com/spreadsheets/d/17eQCh_943_LJ3JpEt_ePl2PqamAZsgQMmxqc0BAfxmw/edit#gid=0',
+        sheetTag: '工作表1'
+    };
+    console.log(msg);
+	$.post('https://script.google.com/macros/s/AKfycbwKaZ0ZWErJf2BkVBfcrU3OifvyI6eMXYrjyk7HGxtoch1EYMH8/exec', msg,function(e){
+		alert(e.toString());
+	});
+  });
+}
+
+var counter = 0, counter2 = 0;
+	if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+      DeviceOrientationEvent.requestPermission()
+        .then(permissionState => {
+          if (permissionState === 'granted') {
+            window.addEventListener('deviceorientation', () => {
+				
+				var a = document.getElementById('alpha'),
+				b = document.getElementById('beta'),
+				g = document.getElementById('gamma'),
+				alpha = event.alpha,
+				beta = event.beta,
+				gamma = event.gamma;
+		  
+				  a.innerHTML = Math.round(alpha);
+				  b.innerHTML = Math.round(beta);
+				  g.innerHTML = Math.round(gamma);
+				  
+				  counter += 1;
+				  
+				  while(counter > 500){
+					counter = 0;
+					counter2 += 1;
+				  }
+			});
+				
+          }
+        })
+        .catch(console.error);
+    } else {
+      // handle regular non iOS 13+ devices
+    }
+	
+	function init() {
+    // feature detect
+    if (typeof DeviceMotionEvent.requestPermission === 'function') {
+      DeviceMotionEvent.requestPermission()
+        .then(permissionState => {
+          if (permissionState === 'granted') {
+            window.addEventListener('devicemotion', () => {});
+          }
+        })
+        .catch(console.error);
+    } else {
+      // handle regular non iOS 13+ devices
+    }
+	
+  }
+  
+</script>
+</head>
+
+<body>
+alpha:<span id="alpha"></span><br/>
+beta:<span id="beta"></span><br/>
+gamma:<span id="gamma"></span><br/>
+<br/><br/><br/><br/><br/>
+伺服器回應: <span id="response"></span>
+
+<br/><br/><br/>
+<input type="button" value="要求權限" onclick="init()"/>
+</body>
+</html>
