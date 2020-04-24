@@ -12,6 +12,7 @@ function saveData(){
     $var_alpha = $('#alpha'),
 	$var_beta = $('#beta'),
 	$var_gamma = $('#gamma'),
+	$var_show = $('#response'),
     $var_btn = $('#btn'),
     msg = {};
 	
@@ -26,7 +27,8 @@ function saveData(){
     };
     console.log(msg);
 	$.post('https://script.google.com/macros/s/AKfycbwKaZ0ZWErJf2BkVBfcrU3OifvyI6eMXYrjyk7HGxtoch1EYMH8/exec', msg,function(e){
-		alert(e.toString());
+		//alert(e.toString());
+		$var_show.innerHTML = e.toString();
 	});
   });
 }
@@ -41,6 +43,7 @@ var counter = 0, counter2 = 0;
 				var a = document.getElementById('alpha'),
 				b = document.getElementById('beta'),
 				g = document.getElementById('gamma'),
+				show = document.getElementById('response'),
 				alpha = event.alpha,
 				beta = event.beta,
 				gamma = event.gamma;
@@ -55,6 +58,7 @@ var counter = 0, counter2 = 0;
 					counter = 0;
 					counter2 += 1;
 					saveData();
+					show.innerHTML = "已送資料到伺服器";
 				  }
 			});
 				
@@ -89,7 +93,7 @@ alpha:<span id="alpha"></span><br/>
 beta:<span id="beta"></span><br/>
 gamma:<span id="gamma"></span><br/>
 <br/><br/><br/><br/><br/>
-伺服器回應: <span id="response"></span>
+訊息: <span id="response"></span>
 
 <br/><br/><br/>
 <input type="button" value="要求權限" onclick="init()"/>
