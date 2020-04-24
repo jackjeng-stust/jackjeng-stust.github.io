@@ -13,13 +13,11 @@ function saveData(){
 	$var_beta = $('#beta'),
 	$var_gamma = $('#gamma'),
 	$var_show = $('#response'),
-    $var_btn = $('#btn'),
     msg = {};
 	
 	var date = new Date();
 	var now = date.getFullYear() + "/" + (date.getMonth()+1) +"/"+ date.getDate() + "  "+ date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
 
-  $var_btn.on('click', function() {
     msg = {
         data: now + "," + $var_alpha.val()+','+ $var_beta.val()+','+ $var_gamma.val(),
         sheetUrl: 'https://docs.google.com/spreadsheets/d/17eQCh_943_LJ3JpEt_ePl2PqamAZsgQMmxqc0BAfxmw/edit#gid=0',
@@ -28,10 +26,9 @@ function saveData(){
     console.log(msg);
 	$var_show.innerHTML = msg;
 	$.post('https://script.google.com/macros/s/AKfycbwKaZ0ZWErJf2BkVBfcrU3OifvyI6eMXYrjyk7HGxtoch1EYMH8/exec', msg,function(e){
-		//alert(e.toString());
-		$var_show.innerHTML = e.toString();
+		alert(e.toString());
+		$var_show.append(e.toString());
 	});
-  });
 }
 
 var counter = 0, counter2 = 0;
@@ -94,7 +91,7 @@ alpha:<span id="alpha"></span><br/>
 beta:<span id="beta"></span><br/>
 gamma:<span id="gamma"></span><br/>
 <br/><br/><br/><br/><br/>
-訊息(1.0): <span id="response"></span>
+訊息(1.1): <span id="response"></span>
 
 <br/><br/><br/>
 <input type="button" value="要求權限" onclick="init()"/>
