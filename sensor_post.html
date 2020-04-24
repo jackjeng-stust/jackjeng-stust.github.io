@@ -26,7 +26,7 @@ function saveData(){
     console.log(msg);
 	$var_show.innerHTML = msg;
 	$.post('https://script.google.com/macros/s/AKfycbwKaZ0ZWErJf2BkVBfcrU3OifvyI6eMXYrjyk7HGxtoch1EYMH8/exec', msg,function(e){
-		alert(e.toString());
+		//alert(e.toString());
 		$var_show.text(e.toString());
 	});
 }
@@ -91,7 +91,7 @@ alpha:<span id="alpha"></span><br/>
 beta:<span id="beta"></span><br/>
 gamma:<span id="gamma"></span><br/>
 <br/><br/><br/><br/><br/>
-訊息(1.2): <span id="response"></span>
+訊息(1.3): <span id="response"></span>
 
 <br/><br/><br/>
 <input type="button" value="要求權限" onclick="init()"/>
