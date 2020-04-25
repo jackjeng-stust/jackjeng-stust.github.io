@@ -32,11 +32,8 @@ function saveData(){
 }
 
 var counter = 0, counter2 = 0;
-	if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-      DeviceOrientationEvent.requestPermission()
-        .then(permissionState => {
-          if (permissionState === 'granted') {
-            window.addEventListener('deviceorientation', () => {
+
+	window.addEventListener('deviceorientation', () => {
 				
 				var a = document.getElementById('alpha'),
 				b = document.getElementById('beta'),
@@ -59,13 +56,6 @@ var counter = 0, counter2 = 0;
 					show.innerHTML = "已送資料到伺服器";
 				  }
 			});
-				
-          }
-        })
-        .catch(console.error);
-    } else {
-      // handle regular non iOS 13+ devices
-    }
 	
 	function init() {
     // feature detect
